@@ -121,6 +121,8 @@ class UnifiDeviceScanner(DeviceScanner):
 
 def _response_to_json(response):
     try:
+        if (str(response)[31:-1].find(UNIFI_SSID_TABLE) == -1):
+            return {}
         json_response = json.loads(str(response)[31:-1].replace("\\\\", "\\").replace("\\'", "'"))
         _LOGGER.debug(str(json_response))
         ssid_table = json_response.get(UNIFI_SSID_TABLE)
